@@ -1,0 +1,3 @@
+web_app: python
+python_version: "3.10"
+run_command: python main.py
