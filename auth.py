@@ -60,6 +60,23 @@ def check_auth_code(code):
     """Проверяет код авторизации."""
     return code == AUTH_CODE
 
+# Добавляем функцию check_auth для совместимости с импортом в catalog_handlers.py
+async def check_auth(update, context):
+    """Проверяет авторизацию пользователя."""
+    from database import get_db
+    
+    db = next(get_db())
+    user_id = update.effective_user.id
+    user = get_user(db, user_id)
+    
+    if not user:
+        await update.effective_message.reply_text(
+            "❌ Вы не авторизованы. Пожалуйста, используйте команду /start для авторизации."
+        )
+        return False
+    
+    return True
+
 def use_auth_code(db: Session, telegram_id, code):
     """
     Использует код авторизации для активации подписки.

@@ -213,6 +213,8 @@ def main():
     )
     
     # Добавляем обработчики команд
+    # Добавляем обработчики команд 2
+
     application.add_handler(main_conv_handler)
     application.add_handler(CommandHandler("catalog", show_catalog))
     application.add_handler(CommandHandler("search", show_search_menu))
