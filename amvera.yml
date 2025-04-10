@@ -1,4 +1,4 @@
 web_app: python
 python_version: "3.11"
-run_command: python main.py
+run_command: PYTHONPATH=/app python main.py
 persistenceMount: /data
