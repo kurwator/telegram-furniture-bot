@@ -8,7 +8,7 @@ from config import DATABASE_URL
 Base = declarative_base()
 
 # Создаем движок SQLAlchemy
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
 # Создаем фабрику сессий
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -37,5 +37,8 @@ def check_db_exists():
     """
     if DATABASE_URL.startswith('sqlite:///'):
         db_path = DATABASE_URL.replace('sqlite:///', '')
+        return os.path.exists(db_path)
+    elif DATABASE_URL.startswith('sqlite:////'):  # Добавляем проверку для абсолютного пути
+        db_path = DATABASE_URL.replace('sqlite:////', '/')
         return os.path.exists(db_path)
     return True
